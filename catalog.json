@@ -1,0 +1,103 @@
+{
+  "tabs": [
+    {
+      "name": "Ứng dụng",
+      "type": "winget",
+      "items": [
+        {
+          "name": "Google Chrome",
+          "id": "Google.Chrome",
+          "desc": "Trình duyệt web của Google."
+        },
+        {
+          "name": "Mozilla Firefox",
+          "id": "Mozilla.Firefox",
+          "desc": "Trình duyệt web mã nguồn mở."
+        },
+        {
+          "name": "7-Zip",
+          "id": "7zip.7zip",
+          "desc": "Giải nén và nén file miễn phí."
+        },
+        {
+          "name": "VLC",
+          "id": "VideoLAN.VLC",
+          "desc": "Trình phát video, nhạc đa năng."
+        },
+        {
+          "name": "Notepad++",
+          "id": "Notepad++.Notepad++",
+          "desc": "Trình soạn thảo văn bản nhẹ."
+        },
+        {
+          "name": "Visual Studio Code",
+          "id": "Microsoft.VisualStudioCode",
+          "desc": "Trình soạn code của Microsoft."
+        },
+        {
+          "name": "Git",
+          "id": "Git.Git",
+          "desc": "Quản lý phiên bản mã nguồn."
+        },
+        {
+          "name": "Discord",
+          "id": "Discord.Discord",
+          "desc": "Chat thoại và nhắn tin."
+        }
+      ]
+    },
+    {
+      "name": "Tinh chỉnh",
+      "type": "command",
+      "items": [
+        {
+          "name": "Hiện đuôi file (.txt, .exe...)",
+          "desc": "Hiện phần mở rộng của tên file trong Explorer.",
+          "run": "Set-ItemProperty 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced' -Name HideFileExt -Value 0; Stop-Process -Name explorer -Force",
+          "undo": "Set-ItemProperty 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced' -Name HideFileExt -Value 1; Stop-Process -Name explorer -Force"
+        },
+        {
+          "name": "Hiện file và thư mục ẩn",
+          "desc": "Hiện các file ẩn trong Explorer.",
+          "run": "Set-ItemProperty 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced' -Name Hidden -Value 1; Stop-Process -Name explorer -Force",
+          "undo": "Set-ItemProperty 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced' -Name Hidden -Value 2; Stop-Process -Name explorer -Force"
+        },
+        {
+          "name": "Menu chuột phải kiểu cũ (Win 11)",
+          "desc": "Dùng menu chuột phải đầy đủ như Windows 10.",
+          "run": "New-Item -Path 'HKCU:\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\\InprocServer32' -Force -Value '' | Out-Null; Stop-Process -Name explorer -Force",
+          "undo": "Remove-Item -Path 'HKCU:\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}' -Recurse -Force; Stop-Process -Name explorer -Force"
+        },
+        {
+          "name": "Chế độ tối (Dark mode)",
+          "desc": "Bật giao diện tối cho Windows và ứng dụng.",
+          "run": "$p='HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize'; Set-ItemProperty $p AppsUseLightTheme 0; Set-ItemProperty $p SystemUsesLightTheme 0",
+          "undo": "$p='HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize'; Set-ItemProperty $p AppsUseLightTheme 1; Set-ItemProperty $p SystemUsesLightTheme 1"
+        },
+        {
+          "name": "Tắt gợi ý web (Bing) trong ô tìm kiếm Start",
+          "desc": "Tìm kiếm Start chỉ hiện kết quả trên máy.",
+          "run": "$p='HKCU:\\Software\\Policies\\Microsoft\\Windows\\Explorer'; New-Item $p -Force | Out-Null; Set-ItemProperty $p DisableSearchBoxSuggestions 1 -Type DWord",
+          "undo": "Remove-ItemProperty 'HKCU:\\Software\\Policies\\Microsoft\\Windows\\Explorer' -Name DisableSearchBoxSuggestions -ErrorAction SilentlyContinue"
+        }
+      ]
+    },
+    {
+      "name": "Công cụ của tôi",
+      "type": "command",
+      "items": [
+        {
+          "name": "Dọn file tạm (Temp)",
+          "desc": "Xóa file trong thư mục %TEMP% của bạn (file đang dùng sẽ được bỏ qua).",
+          "run": "Remove-Item \"$env:TEMP\\*\" -Recurse -Force -ErrorAction SilentlyContinue; 'Đã dọn xong.'"
+        },
+        {
+          "name": "Giữ Mic (GiuMic.exe)",
+          "desc": "Ví dụ: tải app của bạn về và chạy. Đổi link cho đúng file của bạn.",
+          "run": "$f=\"$env:LOCALAPPDATA\\GiuMic.exe\"; Invoke-WebRequest 'https://DUONG-DAN/GiuMic.exe' -OutFile $f -UseBasicParsing; Start-Process $f",
+          "undo": "Stop-Process -Name GiuMic -Force -ErrorAction SilentlyContinue; Remove-Item \"$env:LOCALAPPDATA\\GiuMic.exe\" -Force -ErrorAction SilentlyContinue"
+        }
+      ]
+    }
+  ]
+}
