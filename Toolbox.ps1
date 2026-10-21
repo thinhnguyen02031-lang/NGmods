@@ -5,7 +5,7 @@
 
 # ============================ CAU HINH ===============================
 $Ten     = "My Toolbox"
-$BaseUrl = "https://raw.githubusercontent.com/TEN_GITHUB/TEN_REPO/main"   # <-- DOI CHO DUNG
+$BaseUrl = "https://raw.githubusercontent.com/thinhnguyen02031-lang/NGmods/main"   # <-- DOI CHO DUNG
 # =====================================================================
 
 $ErrorActionPreference = 'Continue'
